@@ -47,13 +47,30 @@ IN ('Afghanistan', 'Bangladesh', 'China');
 
 
 -- * 3a. Add a `middle_name` column to the table `actor`. Position it between `first_name` and `last_name`. Hint: you will need to specify the data type.
+ALTER TABLE actor
+ADD COLUMN middle_name VARCHAR(45) NULL AFTER first_name;
 
-    
+SELECT	* 
+FROM actor;
+
+
 -- * 3b. You realize that some of these actors have tremendously long last names. Change the data type of the `middle_name` column to `blobs`.
+ALTER TABLE actor
+CHANGE COLUMN middle_name middle_name BLOB NULL DEFAULT NULL ;
+
+SELECT	* 
+FROM actor;
 
 
 -- * 3c. Now delete the `middle_name` column.
+ALTER TABLE actor 
+DROP COLUMN middle_name;
 
+SELECT	* 
+FROM actor;
+
+
+-- 
 
 
 
