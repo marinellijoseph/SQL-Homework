@@ -107,17 +107,28 @@ WHERE actor_id ='172';
 -- * 5a. You cannot locate the schema of the `address` table. Which query would you use to re-create it? *****
 SELECT *
 FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_NAME = 'address'
+WHERE TABLE_NAME = 'address';
 
 
 -- * 6a. Use `JOIN` to display the first and last names, as well as the address, of each staff member. Use the tables `staff` and `address`:
+SELECT staff.first_name, staff.last_name, address.address
+FROM staff
+INNER JOIN address ON
+address.address_id = staff.address_id;
 
-	
 
 -- * 6b. Use `JOIN` to display the total amount rung up by each staff member in August of 2005. Use tables `staff` and `payment`. 
+
+
+
   	
 -- * 6c. List each film and the number of actors who are listed for that film. Use tables `film_actor` and `film`. Use inner join.
+
+
   	
 -- * 6d. How many copies of the film `Hunchback Impossible` exist in the inventory system?
 
+
+
 -- * 6e. Using the tables `payment` and `customer` and the `JOIN` command, list the total paid by each customer. List the customers alphabetically by last name:
+
