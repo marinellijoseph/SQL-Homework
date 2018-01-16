@@ -80,15 +80,44 @@ GROUP BY last_name;
 -- * 4b. List last names of actors and the number of actors who have that last name, but only for names that are shared by at least two actors
 SELECT DISTINCT last_name, count(last_name)
 FROM actor
-GROUP BY last_name;
+GROUP BY last_name
+HAVING count(last_name) > 1;
 
-    
+
 -- * 4c. Oh, no! The actor `HARPO WILLIAMS` was accidentally entered in the `actor` table as `GROUCHO WILLIAMS`,
 --  the name of Harpo's second cousin's husband's yoga teacher. Write a query to fix the record.
-  	
+UPDATE actor 
+SET first_name='HARPO' 
+WHERE actor_id ='172';
+
     
 -- * 4d. Perhaps we were too hasty in changing `GROUCHO` to `HARPO`. It turns out that `GROUCHO` was the correct name after all! In a single query,
 --  if the first name of the actor is currently `HARPO`, change it to `GROUCHO`. Otherwise, change the first name to `MUCHO GROUCHO`, 
+-- as that is exactly what the actor will be with the grievous error. BE CAREFUL NOT TO CHANGE THE FIRST NAME OF EVERY ACTOR TO `MUCHO GROUCHO`, 
+-- HOWEVER! (Hint: update the record using a unique identifier.)
+UPDATE actor 
+SET first_name = 
+	CASE 
+		WHEN first_name = 'HARPO' THEN 'GROUCHO' 
+			ELSE 'MUCHO GROUCHO' 
+	END
+WHERE actor_id ='172';
 
 
+-- * 5a. You cannot locate the schema of the `address` table. Which query would you use to re-create it? *****
+SELECT *
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_NAME = 'address'
 
+
+-- * 6a. Use `JOIN` to display the first and last names, as well as the address, of each staff member. Use the tables `staff` and `address`:
+
+	
+
+-- * 6b. Use `JOIN` to display the total amount rung up by each staff member in August of 2005. Use tables `staff` and `payment`. 
+  	
+-- * 6c. List each film and the number of actors who are listed for that film. Use tables `film_actor` and `film`. Use inner join.
+  	
+-- * 6d. How many copies of the film `Hunchback Impossible` exist in the inventory system?
+
+-- * 6e. Using the tables `payment` and `customer` and the `JOIN` command, list the total paid by each customer. List the customers alphabetically by last name:
