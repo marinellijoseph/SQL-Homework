@@ -118,11 +118,15 @@ address.address_id = staff.address_id;
 
 
 -- * 6b. Use `JOIN` to display the total amount rung up by each staff member in August of 2005. Use tables `staff` and `payment`. 
-
-
+SELECT DISTINCT staff.first_name, staff.last_name, sum(amount)
+FROM staff
+INNER JOIN payment ON
+staff.staff_id = payment.staff_id
+GROUP BY staff.staff_id;
 
   	
 -- * 6c. List each film and the number of actors who are listed for that film. Use tables `film_actor` and `film`. Use inner join.
+
 
 
   	
