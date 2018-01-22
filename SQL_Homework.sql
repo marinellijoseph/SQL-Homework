@@ -220,8 +220,55 @@ ORDER BY rental_rate DESC;
 
   	
 -- * 7f. Write a query to display how much business, in dollars, each store brought in.
+SELECT DISTINCT store_id, sum(amount)
+FROM (
+	SELECT staff.staff_id, staff.store_id
+	FROM staff
+	LEFT JOIN store
+	ON staff.store_id = store.store_id) as a
+LEFT JOIN payment
+ON payment.staff_id = a.staff_id
+GROUP BY store_id;
 
 
 -- * 7g. Write a query to display for each store its store ID, city, and country.
-  	
+SELECT store.store_id, city.city, country.country 
+FROM store 
+INNER JOIN address 
+ON store.address_id = address.address_id 
+INNER JOIN city ON address.city_id = city.city_id 
+INNER JOIN country ON city.country_id = country.country_id;
+
+
 -- * 7h. List the top five genres in gross revenue in descending order. (**Hint**: you may need to use the following tables: category, film_category, inventory, payment, and rental.)
+SELECT name, sum(p.amount) AS gross_revenue 
+FROM category c 
+INNER JOIN film_category fc 
+ON fc.category_id = c.category_id 
+INNER JOIN inventory i ON i.film_id = fc.film_id 
+INNER JOIN rental r ON r.inventory_id = i.inventory_id 
+RIGHT JOIN payment p ON p.rental_id = r.rental_id 
+GROUP BY name ORDER BY gross_revenue DESC LIMIT 5;
+
+
+-- 8a. In your new role as an executive, you would like to have an easy way of viewing the Top five genres by gross revenue. 
+-- Use the solution from the problem above to create a view. If you haven't solved 7h, you can substitute another query to create a view. 
+DROP VIEW IF EXISTS top_five_genres; 
+CREATE VIEW top_five_genres AS
+
+SELECT name, SUM(p.amount) AS gross_revenue 
+FROM category c 
+INNER JOIN film_category fc ON fc.category_id = c.category_id 
+INNER JOIN inventory i ON i.film_id = fc.film_id 
+INNER JOIN rental r ON r.inventory_id = i.inventory_id 
+RIGHT JOIN payment p ON p.rental_id = r.rental_id 
+GROUP BY name ORDER BY gross_revenue DESC LIMIT 5;
+
+
+-- 8b. How would you display the view that you created in 8a? 
+SELECT * FROM top_five_genres;
+
+
+-- 8c. You find that you no longer need the view top_five_genres. Write a query to delete it. 
+DROP VIEW top_five_genres;
+
